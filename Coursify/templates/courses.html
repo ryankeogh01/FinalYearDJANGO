@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous">
+
+
+    <meta charset="UTF-8">
+    <title>Coursify</title>
+
+</head>
+<body>
+{% block content %}
+    <div class = "back">
+    <h1> Browse Courses</h1>
+    </div>
+
+{#    {% for c in courseList %}#}
+{#        <a href="{% url 'show-course' c.code %}">{{ c.code }}</a>#}
+{#    {% endfor %}#}
+
+
+    <div class="search">
+        <div class="search-container">
+            <form class="d-flex" method="POST" action="{% url 'search-courses'%}">
+                  {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Search Courses" aria-label="Search" name="searched">
+              <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+<div id="tableStruc">
+    <div class="table-responsive">
+            <table class = "table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col"> Course Code </th>
+                        <th scope="col"> Course  </th>
+                        <th scope="col"> College </th>
+                    </tr>
+                </thead>
+        {% for c in courseList %}
+        <tbody>
+{#            <a href="{% url 'show-course' c.code %}">#}
+                <tr onclick = "location.href= '{% url 'show-course' c.code %}';">
+                    <td>{{c.code}}</td>
+                    <td>{{c.title}}</td>
+                    <td>{{c.college}}</td>
+                </tr>
+
+        </tbody>
+        {% endfor %}
+            </table>
+        </div>
+</div>
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+<div class= "paginate">
+    {% if courseList.has_previous %}
+        <li class = "page-item">
+        <a class = "page-link" href="?page=1"> &laquo First</a></li>
+        <li class = "page-item">
+            <a class = "page-link" href="?page={{ courseList.previous_page_number }}"> Previous</a></li>
+
+    {% endif %}
+
+    <li class = "page-item"><a href="#" class="page-link"></a> Page {{ courseList.number }} of {{ courseList.paginator.num_pages }}</li>
+
+    {% if courseList.has_next %}
+        <li class = "page-item">
+            <a class = "page-link" href="?page={{ courseList.next_page_number }}"> Next</a></li>
+        <li class = "page-item">
+            <a class = "page-link" href="?page={{ courseList.paginator.num_pages }}"> Last &raquo</a></li>
+
+    {% endif %}
+
+</div>
+      </ul>
+</nav>
+{% endblock %}
+</body>
+</html>

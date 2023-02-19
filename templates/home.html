@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous">
+
+
+    <meta charset="utf-8">
+  <title>{% block title %}Coursify{% endblock %}</title>
+
+
+{#<nav class="navbar navbar-expand-lg navbar-light bg-primary">#}
+{#  <a class="navbar-brand">Coursify</a>#}
+{#  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">#}
+{#    <span class="navbar-toggler-icon"></span>#}
+{#  </button>#}
+{#  <div class="collapse navbar-collapse" id="navbarText">#}
+{#    <ul class="navbar-nav mr-auto">#}
+{#        <li class="nav-item">#}
+{#        <a class="nav-link" href= "#">Home</a>#}
+{#      </li>#}
+{#            <li class="nav-item">#}
+{#        <a class="nav-link" href= "#">Recommendations</a>#}
+{#      </li>#}
+{##}
+{#    </ul>#}
+{##}
+{#  </div>#}
+{#</nav>#}
+</head>
+{% block content %}
+<body>
+
+<div class="intro">
+    <h1> Welcome to Coursify</h1>
+    <p> Use Coursify to browse college courses, course information and enter your interests to generate
+         recommendations that suit you. </p>
+</div>
+
+{#<div class="container">#}
+{#    <div class="row">#}
+{#      <div class="checkbox-container">#}
+{#              <h4> Interests</h4>#}
+{#      <div class="search-container">#}
+{#        <form action="#">#}
+{#          <input type="text" placeholder="Enter Interest">#}
+{#          <button type="submit">Submit</button>#}
+{#        </form>#}
+{#      </div>#}
+{##}
+{#        <input type="checkbox" id="maths">#}
+{#        <label for="maths">Maths</label>#}
+{#        <br>#}
+{#        <input type="checkbox" id="sport">#}
+{#        <label for="sport">Sport</label>#}
+{#        <br>#}
+{#        <input type="checkbox" id="art">#}
+{#        <label for="art">Art</label>#}
+{#        <br>#}
+{#        <input type="checkbox" id="eng">#}
+{#        <label for="enf">English</label>#}
+{#        <br>#}
+{#        <input type="checkbox" id="account">#}
+{#        <label for="account">Accounting</label>#}
+{#        <br>#}
+{#        <input type="checkbox" id="business">#}
+{#        <label for="business">Business</label>#}
+{#        <br>#}
+{#      </div>#}
+{##}
+{#    <div class="checkbox-container">#}
+{#        <div class="search-container">#}
+{#        <form action="#">#}
+{#          <input type="text" placeholder="Enter Interest">#}
+{#          <button type="submit">Submit</button>#}
+{#        </form>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#     <div class="list-box">#}
+{#      <ul class="list-group">#}
+{#        <li class="list-group-item">Item 1</li>#}
+{#        <li class="list-group-item">Item 2</li>#}
+{#        <li class="list-group-item">Item 3</li>#}
+{#        <li class="list-group-item">Item 4</li>#}
+{#        <li class="list-group-item">Item 5</li>#}
+{#        <li class="list-group-item">Item 6</li>#}
+{#        <li class="list-group-item">Item 7</li>#}
+{#        <li class="list-group-item">Item 8</li>#}
+{#        <li class="list-group-item">Item 9</li>#}
+{#          <li class="list-group-item">Item 10</li>#}
+{##}
+{#      </ul>#}
+{#    </div>#}
+{#    </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#</div>#}
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+        <h3> Interests</h3>
+        <div class="search-container">
+        <form action="#">
+          <input type="text" placeholder="Enter Interest">
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h3>Browse Courses</h3>
+        <p> Explore a wide variety of different courses.</p>
+    </div>
+    <div class="col-sm">
+        <h3>Cost of Living</h3>
+    </div>
+  </div>
+</div>
+
+<div>
+    <ul>
+        {% for attribute in attributes %}
+          <li>{{ attribute }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+</body>
+</html>
+{% endblock %}

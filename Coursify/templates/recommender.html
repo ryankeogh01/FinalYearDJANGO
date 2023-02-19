@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+        crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Recommender</title>
+</head>
+<body>
+{% block content %}
+<div class="interest-box">
+<nav class="navbar navbar-light bg-light">
+    <form class="form-inline" method="POST" action="{% url 'results'%}">
+          {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Interest" aria-label="Search" name="interest">
+      <button class="btn btn-outline-success" type="submit">Submit</button>
+    </form>
+</nav>
+</div>
+{% endblock %}
+</body>
+</html>

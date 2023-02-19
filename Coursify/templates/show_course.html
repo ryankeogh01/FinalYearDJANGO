@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Course Information</title>
+</head>
+<>
+{% block content %}
+<div class="showCourse-intro">
+    <div class="container">
+        <h1> Course Information </h1>
+    </div>
+</div>
+
+<div class="course-header">
+    <div class="container">
+        <div class="left-side">
+            <h1>{{ att.title }}</h1>
+            <br>
+            <h2>{{ att.college }}</h2>
+            <h3>{{ att.code }}</h3>
+        </div>
+    </div>
+</div>
+
+{#    <div class="body-section">#}
+{#        <div class="left">#}
+{#            <h1>Left</h1>#}
+{#        </div>#}
+{##}
+{#        <div class="middle">#}
+{#            <h1>Course Overview</h1>#}
+{#            <p> {{ att.description }}</p>#}
+{#            <br>#}
+{#            <h1> Career Opportunities</h1>#}
+{#            <p> {{ att.career }}</p>#}
+{##}
+{#        </div>#}
+{##}
+{#        <div class="right">#}
+{#            <h1>Right</h1>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
+
+  <div class="row">
+    <div class="col l">
+      One of three columns
+    </div>
+    <div class="col-5 m">
+        <h1>Course Overview</h1>
+        <p> {{ att.description }}</p>
+        <br>
+        <h1> Career Opportunities</h1>
+        <p> {{ att.career }}</p>
+    </div>
+    <div class="col r">
+        <h1> Details </h1>
+        <h2> Duration</h2>
+        <p> {{ att.duration }}</p>
+        <h2> College</h2>
+        <p>{{ att.college }}</p>
+        <h2> Characteristics</h2>
+        <p> {{ att.trait }}, {{ att.trait2 }}</p>
+        <h2>URL</h2>
+        <p> {{ att.url }}</p>
+    </div>
+  </div>
+
+
+
+{% endblock %}
+
+
+</body>
+</html>

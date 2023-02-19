@@ -1,0 +1,130 @@
+body {
+  background-color: lightblue !important;
+
+}
+head{
+      color: darkblue !important;
+
+}
+
+.intro{
+    width: 50%;
+    text-align: center;
+  margin: 0 auto;
+}
+
+.checkbox-container {
+    padding: 20px;
+}
+
+
+/*form {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+input[type="text"] {
+    width: 50%;
+    padding: 3%;
+    font-size: 14px;
+      border-radius: 5px;
+      border: 3px solid #ccc;
+}
+
+button[type="submit"] {
+    width: 25%;
+    padding: 3%;
+    font-size: 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px 5px ;
+}
+
+  /*.container {*/
+  /*  display: flex;*/
+  /*  align-items: center;*/
+  /*  justify-content: center;*/
+
+  /*}*/
+
+.checkbox-container {
+    width: 40%;
+    text-align: left;
+    padding-left: 20px;
+    left: 20px;
+    top: 24vh;
+    background-color: #264b5d;
+    border-radius: 5px 5px;
+    color: white;
+    display: inline-block;
+}
+
+.list-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+    color: #4ac1f7 ;
+}
+
+.list-group {
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    color: #a41515;
+    padding-top: 4vh;
+
+}
+
+.navbar navbar-expand-lg navbar-light bg-light{
+    background-color: greenyellow !important;
+}
+
+/*h1 {*/
+/*  font-size: 70px;*/
+/*  font-weight: 600;*/
+/*  background-image: linear-gradient(to left, darkred, greenyellow);*/
+/*  color: transparent;*/
+/*  -webkit-background-clip: text;*/
+/*}*/
+
+h1 {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding-top: 10px;
+}
+
+.col-sm{
+    background-color: salmon;
+    border-radius: 5px;
+    height: 40vh;
+    margin: 1%;
+    margin-top: 10%;
+}
+
+h3 {
+    text-align: center;
+    color: white;
+    padding-top: 10px;
+}
+
+p {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.table{
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 20px; /* add 20px of space above the table */
+}
+
+/*.paginate {*/
+/*     position: absolute;*/
+/*  bottom: 0;*/
+/*  width: 100%;*/
+
+/*}*/
