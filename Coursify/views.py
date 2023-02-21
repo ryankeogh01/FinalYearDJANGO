@@ -1,4 +1,5 @@
 import pymongo
+import spacy
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,6 +7,9 @@ from django.shortcuts import render
 from django.shortcuts import render
 from .models import Course
 from django.core.paginator import Paginator
+from django.db.models import Q
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 def coursePagination(request):
     courses = Course.objects.all()
@@ -40,14 +44,8 @@ def redirect(request, code):
     except:
         return render(request, 'error.html')
 
-#
-# def recommender(request):
-#     if request.method =='POST'
-#     return render(request, 'recommender.html')
-
 def results(request):
-    return render(request, 'results.html')
-
+    return render(request, 'recommender.html')
 
 def get_interest(request):
     if request.method == 'POST':
@@ -59,6 +57,31 @@ def get_interest(request):
     return render(request, 'recommender.html')
 
 
+
+def recommender(request):
+    if request.method == 'POST':
+        user_interest = request.POST.get('interest')
+
+        nlp = spacy.load('en_core_web_lg')
+
+        course_descriptions = Course.objects.values_list('description', flat=True)
+
+
+        similarity_scores = []
+
+        for course_description in course_descriptions:
+            if course_description is not None:
+                doc1 = nlp(user_interest)
+                doc2 = nlp(course_description)
+                similarity_scores.append(doc1.similarity(doc2))
+
+        recommended_courses = []
+        for idx, score in sorted(enumerate(similarity_scores), key=lambda x:x[1], reverse=True)[:20]:
+            recommended_course = Course.objects.filter(description=course_descriptions[idx]).first()
+            if recommended_course:
+                recommended_courses.append((recommended_course, score))
+
+        return render(request, 'results.html', {'recommender_results': recommended_courses})
 
 
 

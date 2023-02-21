@@ -13,11 +13,27 @@
 </head>
 <body>
 {% block content %}
-<ul>
-  {% for recommendation in recommendations %}
-    <li>{{ recommendation }}</li>
-  {% endfor %}
-</ul>
+        <h1>Recommended Items</h1>
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+  <tr>
+        <th scope="col">Course Title</th>
+        <th scope="col"> College </th>
+        <th scope="col">Similarity Score</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for course, score in recommender_results %}
+    <tr>
+                    <tr onclick = "location.href= '{% url 'show-course' course.code %}';">
+
+      <td>{{ course.title }}</td>
+        <td>{{ course.college }}</td>
+      <td>{{ score }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock %}
 </body>
