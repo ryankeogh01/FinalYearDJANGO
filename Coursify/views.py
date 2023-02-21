@@ -58,30 +58,68 @@ def get_interest(request):
 
 
 
+# def recommender(request):
+#     if request.method == 'POST':
+#         user_interest = request.POST.get('interest')
+#
+#         nlp = spacy.load('en_core_web_lg')
+#
+#         course_descriptions = Course.objects.values_list('description', flat=True)
+#
+#
+#         similarity_scores = []
+#
+#         for course_description in course_descriptions:
+#             if course_description is not None:
+#                 doc1 = nlp(user_interest)
+#                 doc2 = nlp(course_description)
+#                 similarity_scores.append(doc1.similarity(doc2))
+#
+#         recommended_courses = []
+#         for idx, score in sorted(enumerate(similarity_scores), key=lambda x:x[1], reverse=True)[:20]:
+#             recommended_course = Course.objects.filter(description=course_descriptions[idx]).first()
+#             if recommended_course:
+#                 recommended_courses.append((recommended_course, score))
+#
+#         return render(request, 'results.html', {'recommender_results': recommended_courses})
+
+
 def recommender(request):
     if request.method == 'POST':
         user_interest = request.POST.get('interest')
 
         nlp = spacy.load('en_core_web_lg')
 
-        course_descriptions = Course.objects.values_list('description', flat=True)
+        courses = Course.objects.all()
+        course_descriptions = {}
 
+        for course in courses:
+            if course.description is not None:
+                description = nlp(course.description.lower())
+                clean_desc = []
+                for token in description:
+                    if not token.is_punct and not token.is_currency and not token.is_digit and not token.is_oov \
+                            and not token.is_space and not token.is_stop and not token.like_num and token.pos_ != "PROPN":
+                        clean_desc.append(token.lemma_)
+                clean_desc_str = ' '.join(clean_desc)
+                course_descriptions[clean_desc_str] = course
 
         similarity_scores = []
 
-        for course_description in course_descriptions:
-            if course_description is not None:
-                doc1 = nlp(user_interest)
-                doc2 = nlp(course_description)
-                similarity_scores.append(doc1.similarity(doc2))
+        for desc in course_descriptions:
+            doc1 = nlp(user_interest)
+            doc2 = nlp(desc)
+            similarity_scores.append(doc1.similarity(doc2))
 
         recommended_courses = []
         for idx, score in sorted(enumerate(similarity_scores), key=lambda x:x[1], reverse=True)[:20]:
-            recommended_course = Course.objects.filter(description=course_descriptions[idx]).first()
-            if recommended_course:
-                recommended_courses.append((recommended_course, score))
+            desc = list(course_descriptions.keys())[idx]
+            recommended_course = course_descriptions[desc]
+            recommended_courses.append((recommended_course, score))
 
         return render(request, 'results.html', {'recommender_results': recommended_courses})
+
+
 
 
 
