@@ -1,5 +1,6 @@
 import pymongo
 import spacy
+from django.http import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -118,6 +119,22 @@ def recommender(request):
             recommended_courses.append((recommended_course, score))
 
         return render(request, 'results.html', {'recommender_results': recommended_courses})
+
+
+
+
+
+import requests
+
+
+def get_average_salary(request, job_title):
+    api_key = '84f2871a1c31d44cecbdafa994936b34'
+    app_id = '14541fa5'
+    url = f'https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={app_id}&app_key={api_key}&what={job_title}&content-type=application/json'
+    response = requests.get(url)
+    data = response.json()
+    average_salary = data['results'][0]['salary_max']
+    return render(request, 'home.html', {'average_salary': average_salary})
 
 
 

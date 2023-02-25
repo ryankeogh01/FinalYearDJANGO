@@ -8,4 +8,6 @@ urlpatterns = [
     path('att/<str:code>/', views.redirect, name='show-course'),
     path('recommender/', views.results, name='recommender'),
     path('results/', views.recommender, name='results'),
+    path('salary/<str:job_title>/', views.get_average_salary, name='get_average_salary'),
+
 ]
