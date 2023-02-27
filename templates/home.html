@@ -59,6 +59,24 @@
         <div class="card-body">
           <h5 class="card-title">Salary Finder</h5>
           <p class="card-text"><br>Search Jobs Here Using Our API to get the Average Salary for that job.
+     <form class="form-inline" method="POST" onsubmit="return navigateForm()">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Job Title" aria-label="Search" name="job_title">
+      <button class="btn btn-outline-success" type="submit">Submit</button>
+    </form>
+            <script>
+              function navigateForm() {
+                var input = document.getElementsByName("job_title")[0].value;
+                if (input == "") {
+                  alert("Please enter a job title");
+                  return false;
+                }
+                var url = "/salary/" + encodeURIComponent(input) + "/";
+                window.location.href = url;
+                return false;
+              }
+            </script>
+
                       <h1>£{{average_salary }}</h1>
 
         </div>
@@ -70,6 +88,7 @@
 
 <div class="container">
 </div>
+
 
 
 </body>

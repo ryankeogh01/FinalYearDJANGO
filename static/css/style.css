@@ -127,14 +127,7 @@ h1 {
 /*    height: 70vh;*/
 /*}*/
 
-.paginate{
-    position: absolute;
-    bottom: 0px;
-}
 
-.paginate {
-    margin-left: 50%;
-}
 
 .back{
     text-align: center;

@@ -1,16 +1,10 @@
-import pymongo
 import spacy
-from django.http import JsonResponse
-from django.shortcuts import render
-
-# Create your views here.
 
 from django.shortcuts import render
 from .models import Course
 from django.core.paginator import Paginator
-from django.db.models import Q
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import requests
+
 
 def coursePagination(request):
     courses = Course.objects.all()
@@ -22,21 +16,23 @@ def coursePagination(request):
     return render(request, 'courses.html', {'courseList': courseList})
 
 
+# def course_searchPagination(request):
+#     courses = Course.objects.all()
+#
+#     p = Paginator(Course.objects.all().order_by('title'), 20)
+#     page = request.GET.get('page')
+#     courseList = p.get_page(page)
+#
+#     return render(request, 'search_course.html', {'courseList': courseList})
+
+
 def search_courses(request):
-    course = []
-    if request.method == "POST":
-        searched = request.POST['searched']
-        p = Paginator(Course.objects.filter(title__contains=searched).order_by('title'), 10)
-        page = request.GET.get('page')
-        course = p.get_page(page)
+    searched = request.POST['searched']
+    course = Course.objects.filter(title__contains=searched).order_by('title')
 
-    return render(request, 'search_course.html', {'courses': course})
-    # else:
-    #     return render(request, 'search_course.html', {})
+    return render(request, 'search_course.html', {'course': course})
 
-# def show_course(request, course_id):
-#     course = Course.objects.get(course_id)
-#     return render(request, 'show_course.html', {'course': course})
+
 
 def redirect(request, code):
     try:
@@ -124,17 +120,33 @@ def recommender(request):
 
 
 
-import requests
 
 
-def get_average_salary(request, job_title):
-    api_key = '84f2871a1c31d44cecbdafa994936b34'
-    app_id = '14541fa5'
-    url = f'https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={app_id}&app_key={api_key}&what={job_title}&content-type=application/json'
-    response = requests.get(url)
-    data = response.json()
-    average_salary = data['results'][0]['salary_max']
+# def get_average_salary(request):
+#     if request.method == 'POST':
+#         job_title = request.POST.get('job-title')
+#         api_key = '84f2871a1c31d44cecbdafa994936b34'
+#         app_id = '14541fa5'
+#         url = f'https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={app_id}&app_key={api_key}&what={job_title}&content-type=application/json'
+#         response = requests.get(url)
+#         data = response.json()
+#         average_salary = data['results'][0]['salary_max']
+#         return render(request, 'home.html', {'average_salary': average_salary})
+#     else:
+#         return render(request, 'home.html')
+
+def get_average_salary(request, job_title=''):
+    if job_title:
+        api_key = '84f2871a1c31d44cecbdafa994936b34'
+        app_id = '14541fa5'
+        url = f'https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={app_id}&app_key={api_key}&what={job_title}&content-type=application/json'
+        response = requests.get(url)
+        data = response.json()
+        average_salary = data['results'][0]['salary_max'] + data['results'][1]['salary_max'] /2
+    else:
+        average_salary = None
     return render(request, 'home.html', {'average_salary': average_salary})
+
 
 
 
