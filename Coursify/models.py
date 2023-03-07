@@ -19,6 +19,7 @@ class Course(models.Model):
     trait = models.CharField(max_length=100, db_column='trait')
     trait2 = models.CharField(max_length=100, db_column='trait2')
     url = models.CharField(max_length=100, db_column='college_URL')
+    title_url = models.CharField(max_length=100, db_column='Title_URL')
 
 
     class Meta:

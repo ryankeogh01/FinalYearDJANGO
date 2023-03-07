@@ -9,6 +9,7 @@
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
         crossorigin="anonymous">
 
+
     <meta charset="UTF-8">
     <title>Recommender</title>
 </head>
@@ -19,7 +20,7 @@
         <h1></h1>
     </div>
 
-    <div class="rec-title">
+    <div class="back">
         <h1>Recommendation Engine</h1>
     </div>
 
@@ -32,6 +33,19 @@
     </form>
 </nav>
 </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <div id="loaderIcon" style="visibility:hidden;"><img src="{% static "/img/loader.gif" %}" alt="Loading..."/></div>
+
+    <script>
+    $(document).ready(function(){
+        $('.form-inline').submit(function() {
+
+            $('#loaderIcon').css('visibility', 'visible');
+            $('#loaderIcon').show();
+        });
+    })
+    </script>
 
 
 

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 
 
     <meta charset="utf-8">
@@ -82,13 +86,47 @@
         </div>
       </div>
     </div>
+
+<div class="col-sm-4">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">Rent Cost</h5>
+      <p class="card-text"><br>Enter a city and country to find the average rent cost.
+    <form class="form-inline" method="POST" onsubmit="return navigateForm2()">
+      {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="City" aria-label="Search" name="city_name" >
+        <input class="form-control mr-sm-2" type="search" placeholder="Country" aria-label="Search" name="country_name">
+
+      <button class="btn btn-outline-success" type="submit">Submit</button>
+    </form>
+            <script>
+              function navigateForm2() {
+                var input = document.getElementsByName("city_name")[0].value;
+                var country = document.getElementsByName("country_name")[0].value;
+
+                if (input == "" || country == "") {
+                  alert("Please enter a city and country name");
+                  return false;
+                }
+
+                var url = "/rent/" + encodeURIComponent(input) + "/" + encodeURIComponent(country) + "/";
+                window.location.href = url;
+
+                return false;
+              }
+            </script>
+
+                      <h1>{{average_rent}}</h1>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
 <div class="container">
 </div>
-
 
 
 </body>

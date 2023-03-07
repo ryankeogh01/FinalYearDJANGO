@@ -26,15 +26,17 @@
             <th scope="col"> College </th>
         </tr>
     </thead>
-    {% for c in course %}
-    <tbody>
-        <td>
-            {{c.code}}
-        </td>
-            <td>{{c.title}}</td>
-            <td>{{c.college}}</td>
-    </tbody>
-    {% endfor %}
+        {% for c in course %}
+            <tbody>
+            <a href="{% url 'show-course' c.code %}"/>
+                <tr onclick = "location.href= '{% url 'show-course' c.code %}';">
+                    <td>{{c.code}}</td>
+                    <td>{{c.title}}</td>
+                    <td>{{c.college}}</td>
+                </tr>
+
+            </tbody>
+        {% endfor %}
 </table>
 
 

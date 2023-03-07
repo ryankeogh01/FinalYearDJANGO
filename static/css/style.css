@@ -131,7 +131,7 @@ h1 {
 
 .back{
     text-align: center;
-    background-color: #5b5b5b;
+    background-color: #167883;
     padding-bottom: 10px;
 }
 
@@ -154,6 +154,10 @@ h1 {
 
 .tableStruc{
     width: 100%;
+}
+
+.tableStruc thead {
+    color: #4ac1f7;
 }
 
 .showCourse-intro{
@@ -334,4 +338,12 @@ text-align: center;
     text-align: center;
     margin: auto;
 
+}
+
+
+#loaderIcon {
+      position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
