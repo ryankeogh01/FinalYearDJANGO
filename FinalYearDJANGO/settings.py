@@ -93,9 +93,22 @@ DATABASES = {
                 'username': 'ryankeogh',
                 'password': 'KildareCBSTUD2020',
         }
+    },
+    'test': {
+        'ENGINE': 'djongo',
+        'NAME': 'test_CoursifyData',
+        'CLIENT': {
+            'host': 'mongodb+srv://<test_username>:<test_password>@coursifycluster.nlwdba1.mongodb.net/?retryWrites=true&w=majority',
+            'username': 'ryankeogh',
+            'password': 'KildareCBSTUD2020',
+        }
     }
 }
 
+TEST = {
+    'NAME': 'test_CoursifyData',
+    'MIRROR': 'default',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

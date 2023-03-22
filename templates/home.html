@@ -80,8 +80,17 @@
                 return false;
               }
             </script>
+                    {% if error_message_salary %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                        {{ error_message_salary }}
+                        </div>
+                    {% endif %}
 
-                      <h1>£{{average_salary }}</h1>
+                    {% if average_salary %}
+                        <div class="alert alert-success mt-3" role="alert">
+                    <h1>€{{average_salary }}</h1>
+                        </div>
+                    {% endif %}
 
         </div>
       </div>
@@ -91,7 +100,7 @@
   <div class="card h-100">
     <div class="card-body">
       <h5 class="card-title">Rent Cost</h5>
-      <p class="card-text"><br>Enter a city and country to find the average rent cost.
+      <p class="card-text"><br>Enter a city and country to find the average rent cost for a one bedroom apartment.
     <form class="form-inline" method="POST" onsubmit="return navigateForm2()">
       {% csrf_token %}
         <input class="form-control mr-sm-2" type="search" placeholder="City" aria-label="Search" name="city_name" >
@@ -115,9 +124,17 @@
                 return false;
               }
             </script>
+                    {% if error_message %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                        {{ error_message }}
+                        </div>
+                    {% endif %}
 
-                      <h1>{{average_rent}}</h1>
-
+                    {% if average_rent %}
+                        <div class="alert alert-success mt-3" role="alert">
+                        <h1>€{{average_rent}}</h1>
+                        </div>
+                    {% endif %}
         </div>
       </div>
     </div>

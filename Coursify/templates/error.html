@@ -1,3 +1,4 @@
+{% extends 'base.html'%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,10 @@
     <title>Error</title>
 </head>
 <body>
-
+{% block content %}
     <h1>Course Not Found</h1>
+    <p> Please return to previous page.</p>
+{% endblock %}
 
 </body>
 </html>

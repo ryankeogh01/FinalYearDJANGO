@@ -9,8 +9,6 @@ import requests
 
 
 def coursePagination(request):
-    courses = Course.objects.all()
-
     p = Paginator(Course.objects.all().order_by('title'), 20)
     page = request.GET.get('page')
     courseList = p.get_page(page)
@@ -51,7 +49,6 @@ def get_interest(request):
         return render(request, 'results.html', {'recommendation': recommendation})
 
     return render(request, 'recommender.html')
-
 
 
 def recommender(request):
@@ -100,11 +97,28 @@ def get_average_salary(request, job_title=''):
         app_id = '14541fa5'
         url = f'https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={app_id}&app_key={api_key}&what={job_title}&content-type=application/json'
         response = requests.get(url)
-        data = response.json()
-        average_salary = data['results'][0]['salary_max'] + data['results'][1]['salary_max'] / 2
+
+        if response.status_code == 200:
+            data = response.json()
+            if data['results']:
+                salary_max_values = [result['salary_max'] for result in data['results'] if result['salary_max']]
+                if salary_max_values:
+                    average_salary = sum(salary_max_values) / len(salary_max_values)
+                    average_salary = str(round(average_salary, -3))
+                    return render(request, 'home.html', {'average_salary': average_salary})
+                else:
+                    error_message_salary = f"No salary data found for {job_title}"
+                    return render(request, 'home.html', {'error_message_salary': error_message_salary})
+            else:
+                error_message_salary = f"No jobs found for {job_title}"
+                return render(request, 'home.html', {'error_message_salary': error_message_salary})
+        else:
+            error_message_salary = f"Error {response.status_code}: {response.reason}"
+            return render(request, 'home.html', {'error_message_salary': error_message_salary})
+
     else:
-        average_salary = None
-    return render(request, 'home.html', {'average_salary': average_salary})
+        error_message_salary = "Please enter a Job Title "
+        return render(request, 'home.html', {'error_message_salary': error_message_salary})
 
 
 def get_average_rent(request, city_name='', country_name=''):
@@ -114,21 +128,43 @@ def get_average_rent(request, city_name='', country_name=''):
             'X-RapidAPI-Key': '482b4d75edmsha168474ea6b6d1ap1640bbjsn3d6e5bca623a',
             'X-RapidAPI-Host': 'cost-of-living-and-prices.p.rapidapi.com'
         }
-
         url = f'https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name={city_name}&country_name={country_name}'
-
         response = requests.get(url, headers=headers)
-        data = response.json()
-        average_rent = data['prices'][28]['avg']
+        code = response.status_code
 
+        if code == 200:
+            data = response.json()
+            if 'error' in data and data['error']:
+                error_message = f"No rent data found for {city_name}, {country_name}"
+                return render(request, 'home.html', {'error_message': error_message})
+
+            if data['prices']:
+                for item in data['prices']:
+                    if item['good_id'] == 29:
+                        average_rent = item['avg']
+                        return render(request, 'home.html', {'average_rent': average_rent})
+                    else:
+                        error_message = f"No rent data found for {city_name}, {country_name}"
+
+        else:
+            error_message = f"Error {code}: {response.reason}"
     else:
-        average_rent = None
-    return render(request, 'home.html', {'average_rent': average_rent})
+        error_message = "Please enter a city and country name"
+
+    return render(request, 'home.html', {'error_message': error_message})
+
 
 def autocomplete(request):
     query = request.GET.get("searched", "")
-    courses = Course.objects.filter(title__icontains=query).distinct()
+    courses = Course.objects.filter(title__icontains=query).distinct()[:20]
     course_title = [course.title for course in courses]
     return JsonResponse(course_title, safe=False)
 
-
+# def autocomplete(request):
+#     try:
+#         query = request.GET.get("searched", "")
+#         courses = Course.objects.filter(title__icontains=query).distinct()[:20]
+#         course_title = [course.title for course in courses]
+#         return JsonResponse(course_title, safe=False)
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)

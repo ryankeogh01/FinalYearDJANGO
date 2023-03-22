@@ -25,16 +25,16 @@
         <th scope="col">Similarity Score</th>
   </tr>
   </thead>
-  <tbody>
-    {% for course, score in recommender_results %}
-    <tr>
-                    <tr onclick = "location.href= '{% url 'show-course' course.code %}';">
+    <tbody>
+        {% for course, score in recommender_results %}
+            <tr>
+                <tr onclick = "location.href= '{% url 'show-course' course.code %}';">
 
-      <td>{{ course.title }}</td>
-        <td>{{ course.college }}</td>
-      <td>{{ score }}</td>
-    </tr>
-    {% endfor %}
+                <td>{{ course.title }}</td>
+                <td>{{ course.college }}</td>
+                <td>{{ score }}</td>
+            </tr>
+        {% endfor %}
   </tbody>
 </table>
 
