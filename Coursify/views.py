@@ -6,6 +6,8 @@ from django.shortcuts import render
 from .models import Course
 from django.core.paginator import Paginator
 import requests
+from django.http import HttpResponseServerError
+
 
 
 def coursePagination(request):
@@ -16,17 +18,21 @@ def coursePagination(request):
     return render(request, 'courses.html', {'courseList': courseList})
 
 
+
 def search_courses(request):
     if request.method == 'POST':
-        college = request.POST.getlist('college')
-        if college:
-            searched = request.POST['searched']
-            course = Course.objects.filter(title__contains=searched, college__in=college).order_by('title')
-            return render(request, 'search_course.html', {'course': course})
-        else:
-            searched = request.POST['searched']
-            course = Course.objects.filter(title__contains=searched).order_by('title')
-            return render(request, 'search_course.html', {'course': course})
+        try:
+            college = request.POST.getlist('college')
+            if college:
+                searched = request.POST['searched']
+                course = Course.objects.filter(title__icontains=searched, college__in=college).order_by('title')
+                return render(request, 'search_course.html', {'course': course})
+            else:
+                searched = request.POST['searched']
+                course = Course.objects.filter(title__icontains=searched).order_by('title')
+                return render(request, 'search_course.html', {'course': course})
+        except Exception as e:
+            return HttpResponseServerError(f"Error on course search: {e}")
 
 
 def redirect(request, code):
@@ -168,3 +174,51 @@ def autocomplete(request):
 #         return JsonResponse(course_title, safe=False)
 #     except Exception as e:
 #         return JsonResponse({"error": str(e)}, status=500)
+
+# def favourites(request):
+#     courses = []
+#     if 'favourites' in request.COOKIES:
+#         favourites = request.COOKIES['favourites']
+#         codes = [code.strip().strip('"') for code in favourites.strip('{}').split(':') if code.strip()]
+#         courses = Course.objects.filter(code__in=codes)
+#     return render(request, 'favourites.html', {'courses': courses})
+
+
+# def favourites(request):
+#     courses = []
+#     if 'favourites' in request.COOKIES:
+#         favourites = request.COOKIES['favourites']
+#         codes = [code.strip().strip('"') for code in favourites.strip('{}').split(':') if code.strip()]
+#         for code in codes:
+#             courses.append(Course.objects.filter(code__in=code))
+#     return render(request, 'favourites.html', {'courses': courses})
+
+# def favourites(request):
+#     courses = []
+#     if 'favourites' in request.COOKIES:
+#         favourites = request.COOKIES['favourites']
+#         codes = [code.strip().strip('"') for code in favourites.strip('{}').split(',') if code.strip()]
+#         for code in codes:
+#             courses.append(Course.objects.get(code=code))
+#     return render(request, 'favourites.html', {'courses': courses})
+
+# def favourites(request):
+#     courses = []
+#     if 'favourites' in request.COOKIES:
+#         favourites = request.COOKIES['favourites']
+#         # extract course codes from the favorites cookie
+#         codes = [code.strip().strip('"') for code in favourites.strip('{}').split(',') if code.strip().strip('"')]
+#         # retrieve courses with the extracted course codes
+#         for code in codes:
+#             courses.append(Course.objects.get(code=code))
+#     return render(request, 'favourites.html', {'courses': courses})
+
+def favourites(request):
+    courses =[]
+    if 'favourites' in request.COOKIES:
+        favourites = request.COOKIES['favourites']
+        codes = [code.replace('"', '').replace(':true', '') for code in favourites.strip('{}').split(',')]
+        courses = Course.objects.filter(code__in=codes)
+    return render(request, 'favourites.html', {'courses': courses})
+
+

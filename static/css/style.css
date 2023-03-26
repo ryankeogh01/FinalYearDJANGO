@@ -1,5 +1,13 @@
 body {
     background-color: white;
+    min-height: 100%;
+}
+
+html {
+    min-height: 100%;
+}
+main {
+  margin-top: 60px;
 }
 
 
@@ -28,36 +36,6 @@ body {
     width: 10%;
 }
 
-/*form {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
-
-/*input[type="text"] {*/
-/*    width: 50%;*/
-/*    padding: 3%;*/
-/*    font-size: 14px;*/
-/*      border-radius: 3px;*/
-/*      border: 10px solid #ccc;*/
-/*}*/
-
-/*button[type="submit"] {*/
-/*    width: 15%;*/
-/*    padding: 3%;*/
-/*    background-color: #007bff;*/
-/*    color: #fff;*/
-/*    height: 3vh;*/
-/*    border: none;*/
-/*    border-radius: 5px 5px ;*/
-/*    text-align: center;*/
-/*}*/
-
-  /*.container {*/
-  /*  display: flex;*/
-  /*  align-items: center;*/
-  /*  justify-content: center;*/
-
-  /*}*/
 
 .checkbox-container {
     width: 40%;
@@ -96,36 +74,8 @@ h1 {
 
 .col-sm{
     background-color: salmon;
-    border-radius: 5px;
-    height: 40vh;
-    margin: 1%;
-    margin-top: 10%;
+
 }
-
-/*.d-flex {*/
-/*    background-color: black;*/
-/*    height:90vh;*/
-/*}*/
-
-/*.col-sm h3 {*/
-/*    text-align: center;*/
-/*    color: white;*/
-/*    padding-top: 10px;*/
-/*}*/
-
-/*p {*/
-/*    text-align: center;*/
-/*    padding-top: 20px;*/
-/*}*/
-
-/*.table {*/
-/*    width: 70%;*/
-/*    position: absolute;*/
-/*    left: 15%;*/
-/*    bottom: 10%;*/
-/*    top:17%;*/
-/*    height: 70vh;*/
-/*}*/
 
 
 
@@ -257,14 +207,6 @@ h1 {
     border-bottom: 3px solid #1A8D9A;
 }
 
-/*.l{*/
-/*    background-color: greenyellow;*/
-/*    background-image: url("../img/trinity.jpg");*/
-/*    height: auto;*/
-/*    background-size: 100%; !* Adjust this value to zoom in/out *!*/
-/*    border-radius: 100px;*/
-/*}*/
-
 
 .l{
     background-color: greenyellow;
@@ -318,12 +260,13 @@ text-align: center;
 }
 
 .card {
-    margin-top: 5%;
+    margin-top: 3%;
+    border: 10px solid black;
+    border-radius: 5px;
+
 }
 
 .card-body {
-    border: 5px solid black !important;
-    border-radius: 5px;
 }
 
 .card-text {
@@ -355,11 +298,9 @@ text-align: center;
 
 
 #loaderIcon {
-      position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-    margin-top: 50%;
+      position: relative;
+    left:50%;
+    margin-top: 10%;
 }
 
 .pagination .page-link {
@@ -372,4 +313,63 @@ text-align: center;
     margin-left: 10px;
     padding: 5px;
 
+}
+
+.recommender-intro h4{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.form-control{
+    width: 170px !important;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 3%;
+}
+
+.d-flex.flex-column {
+  height: 100%;
+}
+
+
+
+button[name="info-button"] {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1%;
+    width: 100%;
+}
+
+.back-button {
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+    float: left;
+    margin-top: 10px;
+}
+
+.back-button::before {
+    content: "\2190";
+    display: inline-block;
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.star-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+
+.yellow {
+    color: yellow;
+    border-radius: 20px;
 }

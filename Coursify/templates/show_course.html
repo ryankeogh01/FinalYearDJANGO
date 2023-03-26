@@ -4,21 +4,22 @@
 <html lang="en">
 <head>
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Course Information</title>
+        <meta charset="UTF-8">
+        <title>Course Information</title>
 </head>
-<>
+
 {% block content %}
 <div class="showCourse-intro">
     <div class="container">
+        <a href="javascript:history.go(-1)" class="back-button">Back</a>
         <h1> Course Information </h1>
+        <button id="star-btn" class="star-btn"><i class="fa fa-star-o"></i></button>
     </div>
 </div>
-
 <div class="course-header">
     <div class="container">
         <div class="left-side">
@@ -29,27 +30,6 @@
         </div>
     </div>
 </div>
-
-{#    <div class="body-section">#}
-{#        <div class="left">#}
-{#            <h1>Left</h1>#}
-{#        </div>#}
-{##}
-{#        <div class="middle">#}
-{#            <h1>Course Overview</h1>#}
-{#            <p> {{ att.description }}</p>#}
-{#            <br>#}
-{#            <h1> Career Opportunities</h1>#}
-{#            <p> {{ att.career }}</p>#}
-{##}
-{#        </div>#}
-{##}
-{#        <div class="right">#}
-{#            <h1>Right</h1>#}
-{#        </div>#}
-{##}
-{#    </div>#}
-
 
   <div class="row">
     <div class="col l">
@@ -74,8 +54,30 @@
     </div>
   </div>
 
+<script type="text/javascript">
+  const starBtn = document.getElementById("star-btn");
+  //get cookies by name from getCookie
+  let favoriteCourses = getCookie("favourites");
+  favoriteCourses = favoriteCourses ? JSON.parse(favoriteCourses) : {};
 
+    //if course is in the cookies as a favourites turn yellow
+    if (favoriteCourses["{{ att.code }}"]) {
+        starBtn.classList.add("yellow");
+    }
+    //if button is clicked turn yellow
+    starBtn.addEventListener("click", function() {
+    starBtn.classList.toggle("yellow");
+    //if course is favourites store in cookies and if not favourites remove
+    if (starBtn.classList.contains("yellow")) {
+        favoriteCourses["{{ att.code }}"] = true;
+    } else {
+      delete favoriteCourses["{{ att.code }}"];
+    }
+    //set the cookie in the users browser
+    setCookie("favourites", JSON.stringify(favoriteCourses));
+  });
 
+</script>
 {% endblock %}
 
 

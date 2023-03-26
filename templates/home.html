@@ -34,31 +34,39 @@
         <div class="card-body">
           <h5 class="card-title">Browse Courses</h5>
           <p class="card-text"><br>Navigate to the Browse Courses page to search through over 3000 courses that we have in our database. Use the search bar
-                                to refine the search. <br><br> <a href="{% url 'index' %}">Click Here</a> </p>
+                                to refine the search.
+            <br><br>
+{#              <a href="{% url 'index' %}">Click Here</a> </p>#}
+            <button type="button" class="btn btn-info" name="info-button" onclick="window.location.href='{% url 'index' %}'">Info</button>
+
         </div>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title">View Course Information</h5>
-          <p class="card-text"><br>Browsing through our courses and want to find out more? Click any course on the table that interests you to find out more.
-          <br><br> <a href="{% url 'index' %}">Click Here</a></p>
+            <h5 class="card-title">View Course Information</h5>
+            <p class="card-text"><br>Browsing through our courses and want to find out more? Click any course on the table that interests you to find out more.
+            <br><br>
+{#                <a href="{% url 'index' %}">Click Here</a> </p>#}
+            <button type="button" class="btn btn-info" name="info-button" onclick="window.location.href='{% url 'index' %}'">Info</button>
         </div>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="card h-100">
         <div class="card-body">
-          <h5 class="card-title">Generate Recommendations</h5>
+          <h5 class="card-title">Get Recommendations</h5>
           <p class="card-text"><br>Not sure what you're looking for? Use the Recommendation section to enter your interests and let our
                                 recommendation algorithm find the best courses for you.
-          <br><br> <a href="{% url 'recommender' %}">Click Here</a></p>
+                <br><br>
+                <button type="button" class="btn btn-info" name="info-button" onclick="window.location.href='{% url 'recommender' %}'">Info</button>
+
         </div>
       </div>
     </div>
 
-  <div class="col-sm-4">
+  <div class="col-sm-4" style="margin-top: 2%;">
       <div class="card h-100">
         <div class="card-body">
           <h5 class="card-title">Salary Finder</h5>
@@ -96,7 +104,7 @@
       </div>
     </div>
 
-<div class="col-sm-4">
+<div class="col-sm-4" style="margin-top: 2%;">
   <div class="card h-100">
     <div class="card-body">
       <h5 class="card-title">Rent Cost</h5>
@@ -142,10 +150,16 @@
 </div>
 
 
-<div class="container">
-</div>
+
 
 
 </body>
-</html>
+
+<footer class="bg-dark text-center text-lg-start">
+    <div class="text-center p-3" style="color: #1A8D9A;">
+     2023 Ryan Keogh: Coursify
+    </div>
+</footer>
 {% endblock %}
+
+</html>
