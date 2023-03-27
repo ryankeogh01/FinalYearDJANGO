@@ -58,8 +58,12 @@
   const starBtn = document.getElementById("star-btn");
   //get cookies by name from getCookie
   let favoriteCourses = getCookie("favourites");
-  favoriteCourses = favoriteCourses ? JSON.parse(favoriteCourses) : {};
-
+  //if cookie parse if not empty
+    if (favoriteCourses) {
+      favoriteCourses = JSON.parse(favoriteCourses);
+    } else {
+      favoriteCourses = {};
+}
     //if course is in the cookies as a favourites turn yellow
     if (favoriteCourses["{{ att.code }}"]) {
         starBtn.classList.add("yellow");
