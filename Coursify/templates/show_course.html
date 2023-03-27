@@ -69,9 +69,11 @@
     starBtn.classList.toggle("yellow");
     //if course is favourites store in cookies and if not favourites remove
     if (starBtn.classList.contains("yellow")) {
+        console.log("Favourite has been added");
         favoriteCourses["{{ att.code }}"] = true;
     } else {
-      delete favoriteCourses["{{ att.code }}"];
+        console.log("Favourite has been deleted");
+        delete favoriteCourses["{{ att.code }}"];
     }
     //set the cookie in the users browser
     setCookie("favourites", JSON.stringify(favoriteCourses));
