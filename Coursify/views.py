@@ -1,7 +1,6 @@
 import spacy
 from django.http import JsonResponse
 from django.core.cache import cache
-
 from django.shortcuts import render
 from .models import Course
 from django.core.paginator import Paginator
@@ -11,6 +10,11 @@ from django.http import HttpResponseServerError
 
 
 def coursePagination(request):
+    """
+    Pagintation for the application courses sorts into pages of 20
+    :param request:
+    :return: renders pagination
+    """
     p = Paginator(Course.objects.all().order_by('title'), 20)
     page = request.GET.get('page')
     courseList = p.get_page(page)
@@ -20,6 +24,12 @@ def coursePagination(request):
 
 
 def search_courses(request):
+    """
+    View to search courses, takes in the user input(s) and filters the database
+    based on them. Returns the results to the user
+    :param request:
+    :return: render of the results
+    """
     if request.method == 'POST':
         try:
             college = request.POST.getlist('college')
@@ -36,6 +46,12 @@ def search_courses(request):
 
 
 def redirect(request, code):
+    """
+    Redirects the users to the show courses page
+    :param request:
+    :param code: course code
+    :return: render of pages on success or failure
+    """
     try:
         att = Course.objects.get(code=code)
         return render(request, 'show_course.html', {'att': att})
@@ -48,6 +64,11 @@ def results(request):
 
 
 def get_interest(request):
+    """
+    Obtains the interest for the recommendation system which has been entered by the user
+    :param request:
+    :return: interest to the system
+    """
     if request.method == 'POST':
         user_interest = request.POST['interest']
         recommendation = recommender(user_interest)
@@ -58,6 +79,12 @@ def get_interest(request):
 
 
 def recommender(request):
+    """
+    Recommendation system view which uses the user interest and spacy. Will train and clean the descriptions and also
+    will calculate similarity between the interest and each description.
+    :param request:
+    :return: The top 20 most similar courses by highest to lowest
+    """
     if request.method == 'POST':
         user_interest = request.POST.get('interest')
 
@@ -96,8 +123,14 @@ def recommender(request):
 
         return render(request, 'results.html', {'recommender_results': recommended_courses})
 
-
 def get_average_salary(request, job_title=''):
+    """
+    API to obtain the average salary of a job. Takes in user input and requests from API.
+    Will obtain all values of that field, divide by amount of values.
+    :param request:
+    :param job_title: user input
+    :return: the average salary to the home page
+    """
     if job_title:
         api_key = '84f2871a1c31d44cecbdafa994936b34'
         app_id = '14541fa5'
@@ -128,6 +161,14 @@ def get_average_salary(request, job_title=''):
 
 
 def get_average_rent(request, city_name='', country_name=''):
+    """
+    Uses the user input for city name and country to send API request to obtain the average monthly rental cost
+    of a 1 bedroom apartment in that area.
+    :param request:
+    :param city_name: user input city
+    :param country_name: user input country
+    :return: the API result of average rent to the home page.
+    """
     if city_name and country_name:
 
         headers = {
@@ -151,7 +192,6 @@ def get_average_rent(request, city_name='', country_name=''):
                         return render(request, 'home.html', {'average_rent': average_rent})
                     else:
                         error_message = f"No rent data found for {city_name}, {country_name}"
-
         else:
             error_message = f"Error {code}: {response.reason}"
     else:
@@ -161,6 +201,12 @@ def get_average_rent(request, city_name='', country_name=''):
 
 
 def autocomplete(request):
+    """
+    Autocomplete feature for the search courses which will see that the user has typed and give suggestions
+    on courses in the database.
+    :param request:
+    :return: list of suitable courses.
+    """
     query = request.GET.get("searched", "")
     courses = Course.objects.filter(title__icontains=query).distinct()[:20]
     course_title = [course.title for course in courses]
@@ -168,6 +214,12 @@ def autocomplete(request):
 
 
 def favourites(request):
+    """
+    view to allow users to view the courses which they have favourited in their own page, splits the cookies to obtain
+    the code which is filtered in the database
+    :param request:
+    :return: list of all courses from the browser cookies
+    """
     courses =[]
     if 'favourites' in request.COOKIES:
         favourites = request.COOKIES['favourites']

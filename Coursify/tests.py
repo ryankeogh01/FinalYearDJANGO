@@ -1,9 +1,9 @@
 import spacy
 from django.core.cache import cache
-from django.test import TestCase, Client
-from django.urls import reverse
 from unittest.mock import patch, Mock
 from spacy.tokens import Doc
+from django.test import TestCase, Client
+from django.urls import reverse
 from Coursify.models import Course
 
 
@@ -109,4 +109,32 @@ class GetAverageSalaryTestCase(TestCase):
         self.assertContains(response, '55000')
         print(response)
 
+
+
+class TestFavouritesView(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.course1 = Course.objects.create(code='C001', title='Course 1')
+        self.course2 = Course.objects.create(code='C002', title='Course 2')
+        self.course3 = Course.objects.create(code='C003', title='Course 3')
+
+    def test_favourites_with_no_cookies(self):
+        response = self.client.get(reverse('favourites'))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['courses'], [])
+
+    def test_favourites_with_cookies(self):
+        cookies = '{"C001": true, "C003": true, "C002": true}'
+        response = self.client.get(reverse('favourites'), {'favourites': cookies})
+        self.assertEqual(response.status_code, 200)
+        expected_codes = ["C001", "C003", "C002"]
+        actual_codes = [course.code for course in response.context['courses']]
+        print(actual_codes)
+        print(response.content)
+        self.assertListEqual(actual_codes, expected_codes)
+
+    def tearDown(self):
+        self.course1.delete()
+        self.course2.delete()
+        self.course3.delete()
 
